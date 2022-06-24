@@ -1,2 +1,13 @@
 # Personal notes, not to be published
 notes.md
+
+# Classical JSON files named that could contains secrets
+dev*.json
+uat*.json
+prd*.json
+prod*.json
+ppr*.json
+pprd*.json
+preprod*.json
+int*.json
+test*.json
