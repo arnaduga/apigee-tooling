@@ -1,0 +1,11 @@
+{
+  "name": "<KeyValueMapName>",
+  "organization": "<Apigee-X-Organization>",
+  "environment": "<Apigee-X-Environment>",
+  "keys": [
+    {
+      "name": "<KeyName>",
+      "value": "<KeyValue>"
+    }
+  ]
+}
