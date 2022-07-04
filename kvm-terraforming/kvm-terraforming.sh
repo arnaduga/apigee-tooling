@@ -17,8 +17,9 @@
 ## ######################################
 
 # Small library for better log display
-source "$PWD/lib/logutils.sh"
-
+SCRIPT_ROOT=$( (cd "$(dirname "$0")" && cd .. && pwd ))
+source "$SCRIPT_ROOT/lib/logutils.sh"
+source "$SCRIPT_ROOT/lib/apigee-common.sh"
 
 ## FUNCTIONS ##########
 upsert_kvm () {
@@ -81,7 +82,7 @@ upsert_keys () {
       # Extractin keyname and keyvalue
       KEYNAME=$(jq -c -r '.name' <<< "$KEY")
       KEYVALUE=$(jq -c -r '.value' <<< "$KEY")
-      loginfo "Creation key '$KEYNAME' with value '${KEYVALUE:0:5}...' (hidden for confidentiality)"
+      loginfo "Creation key '$KEYNAME' with value '${KEYVALUE:0:5}******' (hidden for confidentiality)"
 
       # DELETE FIRST
       URI="https://apigee.googleapis.com/v1/organizations/$1/environments/$2/keyvaluemaps/$3/entries/$KEYNAME"
@@ -115,6 +116,7 @@ upsert_keys () {
 
 
 ## SCRIPT ##########
+
 # Check number of argument
 if [ $# -ne 1 ]
 then
@@ -149,23 +151,19 @@ ORG=$(jq -c -r '.organization | select (.!=null)' $1)
 ENV=$(jq -c -r '.environment | select (.!=null)' $1)
 KEYS=$(jq -c -r '.keys' $1)
 
-if [ -z ${KVMNAME:+x} ] 
-then
+if [ -z ${KVMNAME:+x} ]; then
   logfatal "KVM Name not found"
   stop=1
 fi
-if [ -z ${ORG:+x} ] 
-then
+if [ -z ${ORG:+x} ]; then
   logfatal "ORG not found"
   stop=1
 fi
-if [ -z ${ENV:+x} ] 
-then
+if [ -z ${ENV:+x} ]; then
   logfatal "ENV not found"
   stop=1
 fi
-if [ ! -z ${stop:+x} ]
-then
+if [ ! -z ${stop:+x} ]; then
   logfatal "Missing mandatory information. Stopping here!"
   exit 4
 fi
@@ -175,11 +173,17 @@ fi
 loginfo "Getting GCloud credentials"
 AUTH=$(gcloud auth print-access-token)
 
-if [ -z ${AUTH:+x} ]
-then
+if [ -z ${AUTH:+x} ]; then
   logfatal "Error while getting creds. Stopping."
   exit 5
 fi
+
+# Check if ORG is OK
+checkOrganization $ORG
+
+# Check if ENV is OK
+checkEnvironment $ORG $ENV
+
 
 # Preliminaries are good. Let's start
 
