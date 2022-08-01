@@ -15,7 +15,7 @@
 # limitations under the License.
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
+BLUE='\033[0;36m'
 NOCOL='\033[0m'
 
 logdebug() {

@@ -40,3 +40,13 @@ checkEnvironment () {
         exit 5
     fi
 }
+
+getAuth () {
+    if [ -z ${AUTH} ]; then
+        loginfo "AUTH - Generating a new token"
+        AUTH=$(gcloud auth print-access-token)
+    else
+        loginfo "AUTH - AUTH variable does exist and will be used to authenticate API calls."
+    fi
+    logdebug "${AUTH:0:15}*****"
+}

@@ -180,16 +180,13 @@ fi
 
 # Check if ORG is OK
 checkOrganization $ORG
-
 # Check if ENV is OK
 checkEnvironment $ORG $ENV
 
 
 # Preliminaries are good. Let's start
-
 # First, the MAP
 upsert_kvm $ORG $ENV $KVMNAME 
-
 # Second, the KEYS
 upsert_keys $ORG $ENV $KVMNAME $KEYS
 
