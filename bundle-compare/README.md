@@ -89,3 +89,13 @@ $ echo $?
 0
 
 ```
+
+### Exit codes
+
+| Code | Description                                        |
+| ---- | -------------------------------------------------- |
+| `0`  | Bundles are the same (excluding "header" zip file) |
+| `1`  | Bundles are NOT the same                           |
+| `2`  | Wrong number of script arguments                   |
+| `3`  | Argument is not an existing file                   |
+| `4`  | Dependencies are not satisfied                     |
