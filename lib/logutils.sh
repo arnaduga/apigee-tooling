@@ -18,20 +18,26 @@ ORANGE='\033[0;33m'
 BLUE='\033[0;36m'
 NOCOL='\033[0m'
 
+NOOUTPUT=''
+
 logdebug() {
     if [ "$debug" = "T" ]; then
         log "DEBUG" "$@" "$BLUE"
     fi
 }
+
 loginfo() {
-    log "INFO" "$@" "$NOCOL"
+        log "INFO" "$@" "$NOCOL"
 }
+
 logwarn() {
-    log "WARN" "$@" "$ORANGE"
+        log "WARN" "$@" "$ORANGE"
 }
+
 logerror() {
-    log "ERROR" "$@" "$RED"
+        log "ERROR" "$@" "$RED"
 }
+
 logfatal() {
     log "FATAL" "$@" "$RED"
 }

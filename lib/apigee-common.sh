@@ -50,3 +50,18 @@ getAuth () {
     fi
     logdebug "${AUTH:0:15}*****"
 }
+
+getEnvironmentDeployments () { 
+    local ORG=$1
+    local ENV=$2
+
+    loginfo "ENVDEPL - Get deployments on organization/$ORG/environments/$ENV"
+
+    URI="https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/deployments"
+
+    RESPONSE=$(curl -s -w "\n%{http_code}" -X GET -H "Authorization: Bearer $AUTH" $URI)
+    RETURN_CODE=$(tail -n1 <<< "$RESPONSE")
+    CONTENT=$(sed '$ d' <<< "$RESPONSE")
+
+    logdebug "RETURN CODE : $RETURN_CODE"
+}

@@ -1,0 +1,12 @@
+{
+  "instances": [
+    {
+      "organization": "orgName1",
+      "environments": ["env1", "env2"]
+    },
+    {
+      "organization": "orgName2",
+      "environments": ["env3"]
+    }
+  ]
+}
